@@ -1,0 +1,854 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_LayoutIndex";
+}
+<link href="/assets/css/swiper-bundle.min.css" rel="stylesheet" />
+<style>
+    .product-item:hover .list-action {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .list-action {
+        opacity: 0;
+        transform: translateY(10px); 
+        transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .product-item:hover .list-action {
+        opacity: 1;
+    }
+
+    .list-action {
+        opacity: 0; 
+        transition: opacity 0.3s ease;
+    }
+</style>
+
+<div id="header" class="relative w-full style-marketplace">
+    <div class="header-menu style-marketplace relative bg-[#263587] w-full md:h-[74px] h-[56px]">
+        <div class="container mx-auto h-full">
+            <div class="header-main flex items-center justify-between h-full">
+                <div class="menu-mobile-icon lg:hidden flex items-center">
+                    <i class="icon-category text-white text-2xl"></i>
+                </div>
+                <a href="/" class="flex items-center">
+                    <h4 class="heading4 text-white">Jammer</h4>
+                </a>
+                <div class="relative w-2/3 pl-8 flex items-center h-[44px] max-lg:hidden">
+                    <div class="w-full flex items-center h-full">
+                        <input type="text" id="search-input" class=" h-full px-4 w-full border border-line rounded-l" placeholder="What are you looking for today?" />
+                        <button id="search-button" class=" button-main bg-red text-white h-full flex items-center px-7 rounded-none rounded-r">Search</button>
+                    </div>
+
+                    <!-- Popup container for search results -->
+                    <div id="search-popup" style="top:45px" class="search-popup hidden absolute bg-white border border-gray-300 p-4 rounded shadow-lg w-full max-w-md">
+                        <!-- Search results will be appended here dynamically -->
+                    </div>
+
+                </div>
+                <div class="right flex gap-12">
+                    <div class="flex items-center gap-4">
+                        <div id="user-icon" class="user-icon flex items-center justify-center cursor-pointer">
+
+                            <i class="ph-bold ph-user text-white text-2xl"></i>
+                            <div class="login-popup absolute top-[74px] w-[320px] p-7 rounded-xl bg-white">
+                                <a href="/Home/Login" class="button-main w-full text-center">Login</a>
+                                <div class="text-secondary text-center mt-3 pb-4">
+                                    Don’t have an account?
+                                    <a href="/Home/signup" class="text-black pl-1 hover:underline">Register </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="account-icons" class="flex items-center justify-center cursor-pointer gap-4" >
+                            <div class="max-md:hidden wishlist-icon flex items-center relative cursor-pointer">
+                                  <a href="/Home/Account">
+                                      <i class="ph-bold ph-user text-white text-2xl" style="color:white"></i>
+                                  </a>
+                            </div>
+                            <div class="max-md:hidden wishlist-icon flex items-center relative cursor-pointer">
+                                <a href="/Home/Wishlist">
+                                    <i id="to-wishlist" class="ph-bold ph-heart text-white text-2xl" style="color:white"></i>
+                                </a>
+                            </div>
+                            <div class="max-md:hidden cart-icon flex items-center relative cursor-pointer">
+                                <a href="/Home/Cart">
+                                    <i id="to-cart" class="ph-bold ph-handbag text-white text-2xl" style="color:white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-nav-menu relative bg-white border-b border-line h-[44px] max-lg:hidden z-10">
+        <div class="container h-full">
+            <div class="top-nav-menu-main flex items-center justify-between h-full">
+                <div class="left flex items-center h-full">
+                   <div class="menu-department-block relative h-full">
+                        <div class="menu-department-btn relative flex items-center sm:gap-24 gap-4 h-full w-fit cursor-pointer">
+                            <div class="flex items-center gap-3">
+                                <i class="ph ph-list text-xl max-sm:text-base"></i>
+                                <div class="text-button whitespace-nowrap">Department</div>
+                            </div>
+                            <i class="ph ph-caret-down text-xl max-sm:text-base"></i>
+                        </div>
+                       <div class="sub-menu-department style-marketplace absolute top-[84px] left-0 right-0 px-[26px] py-[5px] bg-surface rounded-xl border border-line open">
+                            <a href="#" class="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
+                                <span class="flex items-center gap-2">
+                                    <i class="ph-bold ph-desktop-tower text-lg"></i>
+                                    <span class="">Clothing</span>
+                                </span>
+                                <i class="ph-bold ph-caret-right"></i>
+                            </a>
+                            <a href="#" class="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
+                                <span class="flex items-center gap-2">
+                                    <i class="ph-bold ph-device-tablet-camera text-lg"></i>
+                                    <span class="">Tablet & iPad </span>
+                                </span>
+                                <i class="ph-bold ph-caret-right"></i>
+                            </a>
+                            <a href="#" class="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
+                                <span class="flex items-center gap-2">
+                                    <i class="ph-bold ph-printer text-lg"></i>
+                                    <span class="">Printer & Cameras</span>
+                                </span>
+                                <i class="ph-bold ph-caret-right"></i>
+                            </a>
+                            <a href="#" class="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
+                                <span class="flex items-center gap-2">
+                                    <i class="ph-bold ph-device-mobile-speaker text-lg"></i>
+                                    <span class="">Smart Phones</span>
+                                </span>
+                                <i class="ph-bold ph-caret-right"></i>
+                            </a>
+                            <a href="#" class="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
+                                <span class="flex items-center gap-2">
+                                    <i class="ph-bold ph-keyboard text-lg"></i>
+                                    <span class="">Keyboard & Mouse</span>
+                                </span>
+                                <i class="ph-bold ph-caret-right"></i>
+                            </a>
+                            <a href="#" class="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
+                                <span class="flex items-center gap-2">
+                                    <i class="ph-bold ph-game-controller text-lg"></i>
+                                    <span class="">Video Games</span>
+                                </span>
+                                <i class="ph-bold ph-caret-right"></i>
+                            </a>
+                            <a href="#" class="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
+                                <span class="flex items-center gap-2">
+                                    <i class="ph-bold ph-person-arms-spread text-lg"></i>
+                                    <span class="">Sport & Outdoor</span>
+                                </span>
+                                <i class="ph-bold ph-caret-right"></i>
+                            </a>
+                            <a href="#" class="item py-3 whitespace-nowrap border-b border-line w-full flex items-center justify-between">
+                                <span class="flex items-center gap-2">
+                                    <i class="ph-bold ph-watch text-lg"></i>
+                                    <span class="">Smart Watch</span>
+                                </span>
+                                <i class="ph-bold ph-caret-right"></i>
+                            </a>
+                            <a href="#" class="item py-3 whitespace-nowrap w-full flex items-center justify-between">
+                                <span class="flex items-center gap-2">
+                                    <i class="ph-bold ph-headphones text-lg"></i>
+                                    <span class="">Headphone</span>
+                                </span>
+                                <i class="ph-bold ph-caret-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                  <div class="menu-main style-eight h-full pl-12 max-lg:hidden">
+                            <ul class="flex items-center gap-8 h-full">
+                                <li class="h-full">
+                                    <a href="/" class="text-button-uppercase duration-300 h-full flex items-center justify-center"> Home </a>
+                                </li>
+                                <li class="h-full">
+                                    <a href="/Home/About" class="text-button-uppercase duration-300 h-full flex items-center justify-center"> About </a>
+                                </li>
+                                <li class="h-full">
+                                    <a href="/Home/Contact" class="text-button-uppercase duration-300 h-full flex items-center justify-center"> Contact </a>
+                                </li>
+                                <li class="h-full relative">
+                                    <a href="/Home/Blog" class="text-button-uppercase duration-300 h-full flex items-center justify-center"> Blog </a>
+                                </li>
+                            </ul>
+                    </div>
+                </div>
+                <div class="right flex items-center gap-1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Mobile -->
+    <div id="menu-mobile" class="">
+        <div class="menu-container bg-white h-full">
+            <div class="container h-full">
+                <div class="menu-main h-full overflow-hidden">
+                    <div class="heading py-2 relative flex items-center justify-center">
+                        <div class="close-menu-mobile-btn absolute left-0 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-surface flex items-center justify-center">
+                            <i class="ph ph-x text-sm"></i>
+                        </div>
+                        <a href="/" class="logo text-3xl font-semibold text-center">Jammer</a>
+                    </div>
+                    <div class=" relative mt-2">
+                        <i class="ph ph-magnifying-glass text-xl absolute right-3 top-1/3 -translate-y-1/2 cursor-pointer"></i>
+                        <input type="text" id="search-input-mobile" placeholder="What are you looking for?" class="h-12 rounded-lg border border-line text-sm w-full pl-10 pr-4" />
+                        <button id="search-button-mobile" class=" button-main bg-red text-white h-full flex items-center px-7 rounded-none rounded-r">Search</button>
+
+                        <!-- Popup container for search results -->
+                        <div id="search-popup-mobile" style="top:45px" class="search-popup hidden absolute bg-white border border-gray-300 p-4 rounded shadow-lg w-full max-w-md">
+                            <!-- Search results will be appended here dynamically -->
+                        </div>
+                    </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu bar -->
+    <div class="menu_bar fixed bg-white bottom-0 left-0 w-full h-[70px] sm:hidden z-[101]">
+        <div class="menu_bar-inner grid grid-cols-4 items-center h-full">
+            <a href="/" class="menu_bar-link flex flex-col items-center gap-1">
+                <span class="ph-bold ph-house text-2xl block"></span>
+                <span class="menu_bar-title caption2 font-semibold">Home</span>
+            </a>
+            <a href="/" class="menu_bar-link flex flex-col items-center gap-1">
+                <span class="ph-bold ph-list text-2xl block"></span>
+                <span class="menu_bar-title caption2 font-semibold">Manu</span>
+            </a>
+            <a href="/Home/Search" class="menu_bar-link flex flex-col items-center gap-1">
+                <span class="ph-bold ph-magnifying-glass text-2xl block"></span>
+                <span class="menu_bar-title caption2 font-semibold">Search</span>
+            </a>
+            <a href="/Home/Cart" class="menu_bar-link flex flex-col items-center gap-1">
+                    <span class="ph-bold ph-handbag text-2xl block"></span>
+                <span class="menu_bar-title caption2 font-semibold">Cart</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Slider -->
+    <div class="slider-block style-marketplace lg:h-[500px] md:h-[400px] sm:h-[320px] h-[280px] w-full">
+        <div class="container pt-10 flex justify-end h-full w-full">
+            <div class="slider-main lg:pl-5 h-full w-full">
+                <div class="swiper h-full relative rounded-2xl overflow-hidden">
+                    <div class="swiper-wrapper h-full w-full flex items-center bg-surface relative">
+                        <div class="text-content md:pl-16 pl-5 basis-1/2 relative z-[1]">
+                            <div class="text-sub-display text-white">BEST SELLING</div>
+                            <div class="heading2 text-white md:mt-5 mt-2">Step Into New Worlds</div>
+                            <a href="/" class="button-main bg-white text-black hover:bg-green md:mt-8 mt-3">Shop Now </a>
+                        </div>
+                        <div class="sub-img absolute top-0 left-0 w-full h-full">
+                            <img src="./assets/images/slider/marketplace.png" id="category-img-slider" alt="marketplace" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="banner-block md:pt-10 pt-8">
+    <div class="container">
+        <div class="list-banner grid lg:grid-cols-3 sm:grid-cols-2 lg:gap-[30px] gap-[20px]">
+            <a href="/" class="banner-item relative py-[53.5px] px-10 bg-[#63B89F] block duration-500 rounded-2xl overflow-hidden">
+                <div class="banner-img w-1/2 absolute top-1/2 -translate-y-1/2 right-10">
+                    <img src="./assets/images/banner/marketplace1.png" id="category-img-1" class="w-full duration-500 " alt="img" />
+                </div>
+                <div class="banner-content relative">
+                    <div class="heading6 text-white " id="category-name-1">Surface </div>
+                    <div class="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-2" id="shop-btn-1">Shop Surface</div>
+                </div>
+            </a>
+            <a href="/" class="banner-item relative py-[53.5px] px-10 bg-[#8684D4] block duration-500 rounded-2xl overflow-hidden">
+                <div class="banner-img w-1/2 absolute top-1/2 -translate-y-1/2 right-10">
+                    <img src="./assets/images/banner/marketplace2.png" class="w-full duration-500 " id="category-img-2" alt="img" />
+                </div>
+                <div class="banner-content relative">
+                    <div class="heading6 text-white " id="category-name-2" ></div>
+                    <div class="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-2" id="shop-btn-2">Shop Deals</div>
+                </div>
+            </a>
+            <a href="/" class="banner-item relative py-[53.5px] px-10 bg-[#BE4468] block duration-500 max-lg:hidden max-sm:block rounded-2xl overflow-hidden">
+                <div class="banner-img w-1/2 absolute top-1/2 -translate-y-1/2 right-10">
+                    <img src="./assets/images/banner/marketplace3.png" class="w-full duration-500 " id="category-img-3" alt="img" />
+                </div>
+                <div class="banner-content relative">
+                    <div class="heading6 text-white " id="category-name-3">Cameras </div>
+                    <div class="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-2" id="shop-btn-3">Shop Camera</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="md:pt-[60px] pt-10">
+    <div class="container">
+        <div class="heading flex items-center justify-between gap-5 flex-wrap">
+            <div class="left flex items-center gap-6 gap-y-3 flex-wrap">
+                <div class="heading3">Deals of the week</div>
+                <div class="deal-time bg-red py-1 px-5 rounded-lg">
+                    <div class="heading6 text-white">
+                        <span class="countdown-day">24</span>
+                        <span>D : </span>
+                        <span class="countdown-hour">14</span>
+                        <span>H : </span>
+                        <span class="countdown-minute">36</span>
+                        <span>M : </span>
+                        <span class="countdown-second">51</span>
+                        <span>S</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div  class="">
+            <div id="popup-message" class="fixed bg-green-500 text-white p-4 rounded-lg hidden"></div>
+            <div id="products-container" class=" list grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-[30px] gap-[20px] md:mt-10 mt-6">
+
+            </div>
+
+        </div>
+   
+    
+    
+    
+    
+    
+    </div>
+</div>
+
+
+@* Our Collections HTML
+ *@
+<div class="collection-block md:pt-[60px] pt-10">
+    <div class="container">
+        <div class="heading flex items-center justify-between gap-5 flex-wrap">
+            <div class="heading3">Our Collections</div>
+            <a href="/" class="text-button pb-0.5 border-b-2 border-black">View All </a>
+        </div>
+        <div class="list grid xl:grid-cols-4 sm:grid-cols-2 sm:gap-[30px] gap-[20px] md:mt-10 mt-6">
+
+
+
+            <div class="item flex gap-3 px-5 py-6 border border-line rounded-2xl " id="category-card-1">
+                <a href="/" class="img-product w-[100px] h-[100px] flex-shrink-0">
+                    <img src="./assets/images/collection/marketplace1.png" class="w-full h-full object-cover" alt="img" />
+                </a>
+
+                <div class="text-content w-full">
+                    <div class="heading6 pb-4" id="category-parent-1">Smart Phones</div>
+
+                    <ul>
+                    
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-1-child-4" class="has-line-before caption1 text-secondary hover:text-black">Postpaid Phones</a>
+                        </li>
+                    </ul>
+                    <a href="/" class="flex items-center gap-1.5 mt-4">
+                        <span class="text-button" id="category-parent-1-btn">All Smartphone</span>
+                        <i class="ph-bold ph-caret-double-right text-sm"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="item flex gap-3 px-5 py-6 border border-line rounded-2xl" id="category-card-2">
+                <a href="/" class="img-product w-[100px] h-[100px] flex-shrink-0">
+                    <img src="./assets/images/collection/marketplace2.png" class="w-full h-full object-cover" alt="img" />
+                </a>
+                <div class="text-content w-full">
+                    <div class="heading6 pb-4" id="category-parent-2">Tablet & IPads</div>
+                    <ul>
+                        <li>
+                            <a href="/" id="category-parent-2-child-1" class="has-line-before caption1 text-secondary hover:text-black">Tablets</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-2-child-2" class="has-line-before caption1 text-secondary hover:text-black">iPad </a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-2-child-3" class="has-line-before caption1 text-secondary hover:text-black">Windows Tablets</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-2-child-4" class="has-line-before caption1 text-secondary hover:text-black">Tablet Accessories</a>
+                        </li>
+                    </ul>
+                    <a href="/" class="flex items-center gap-1.5 mt-4">
+                        <span class="text-button" id="category-parent-2-btn">All Smartphone</span>
+                        <i class="ph-bold ph-caret-double-right text-sm"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="item flex gap-3 px-5 py-6 border border-line rounded-2xl" id="category-card-3">
+                <a href="/" class="img-product w-[100px] h-[100px] flex-shrink-0">
+                    <img src="./assets/images/collection/marketplace3.png" class="w-full h-full object-cover" alt="img" />
+                </a>
+                <div class="text-content w-full">
+                    <div class="heading6 pb-4" id="category-parent-3">Smart Watch</div>
+                    <ul>
+                        <li>
+                            <a href="/" id="category-parent-3-child-1" class="has-line-before caption1 text-secondary hover:text-black">Sport Watches</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/"id="category-parent-3-child-2" class="has-line-before caption1 text-secondary hover:text-black">Timex Watches</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-3-child-3" class="has-line-before caption1 text-secondary hover:text-black">Watch Brands</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-3-child-4" class="has-line-before caption1 text-secondary hover:text-black">Women Watches</a>
+                        </li>
+                    </ul>
+                    <a href="/" class="flex items-center gap-1.5 mt-4">
+                        <span class="text-button" id="category-parent-3-btn">All Smartphone</span>
+                        <i class="ph-bold ph-caret-double-right text-sm"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="item flex gap-3 px-5 py-6 border border-line rounded-2xl" id="category-card-4">
+                <a href="/" class="img-product w-[100px] h-[100px] flex-shrink-0">
+                    <img src="./assets/images/collection/marketplace4.png" class="w-full h-full object-cover" alt="img" />
+                </a>
+                <div class="text-content w-full">
+                    <div class="heading6 pb-4" id="category-parent-4">Accessories</div>
+                    <ul>
+                        <li>
+                            <a href="/" id="category-parent-4-child-1" class="has-line-before caption1 text-secondary hover:text-black">Accessories</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-4-child-2" class="has-line-before caption1 text-secondary hover:text-black">Changers</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-4-child-3" class="has-line-before caption1 text-secondary hover:text-black">Power Banks</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-4-child-4" class="has-line-before caption1 text-secondary hover:text-black">Smartphones</a>
+                        </li>
+                    </ul>
+                    <a href="/" class="flex items-center gap-1.5 mt-4">
+                        <span class="text-button" id="category-parent-4-btn">All Smartphone</span>
+                        <i class="ph-bold ph-caret-double-right text-sm"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@* Best Selling Section HTML *@
+
+<div class="tab-features-block style-marketplace md:pt-[60px] pt-10">
+        <div class="container">
+            <div class="heading flex items-center justify-between gap-5 flex-wrap w-full">
+                <div class="heading3">Best Sellers</div>
+                <div class="menu-tab flex items-center bg-surface rounded-2xl">
+                    <div class="menu flex items-center gap-2 p-1" id="category-buttons">
+                        <!-- Category buttons will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        <div class="flex items-center gap-5 flex-wrap w-full" id="list-product">
+                <!-- Product cards will be dynamically inserted here -->
+            </div>
+        </div>
+</div>
+
+@* Best Selling Section Banner HTML *@
+
+<div class="banner-block md:pt-[60px] pt-8">
+    <div class="container">
+        <div class="list-banner grid sm:grid-cols-2 lg:gap-[30px] gap-[20px]">
+            <a href="/" class="banner-item relative py-[53.5px] px-10 bg-[#848EFF] block duration-500 rounded-2xl overflow-hidden" id="category-banner-1">
+                <div class="banner-img w-[173px] absolute top-1/2 -translate-y-1/2 right-14">
+                    <img src="./assets/images/banner/marketplace4.png" class="w-full duration-500" alt="category-img-1" />
+                </div>
+                <div class="banner-content relative">
+                    <div class="heading5 text-white" id="category-title-1">Super Sale <br />Apple Watch</div>
+                    <div class="text-title text-white mt-2" id="category-discount-1">Save $599.00</div>
+                    <div class="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-2">Shop Now</div>
+                </div>
+            </a>
+            <a href="/" class="banner-item relative py-[53.5px] px-10 bg-[#E7514A] block duration-500 rounded-2xl overflow-hidden" id="category-banner-2">
+                <div class="banner-img w-1/2 absolute top-1/2 -translate-y-1/2 right-10">
+                    <img src="./assets/images/banner/marketplace5.png" class="w-full duration-500" alt="category-img-2" />
+                </div>
+                <div class="banner-content relative">
+                    <div class="heading5 text-white" id="category-title-2">Deals Good <br />Iphone 15 pro</div>
+                    <div class="text-title text-white mt-2" id="category-discount-2">Save $599.00</div>
+                    <div class="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-2">Shop Now</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+@* Top Rated Products Section HTML *@
+
+
+<div class="top-product bg-surface md:mt-[60px] mt-10 md:py-[60px] py-10">
+    <div class="container">
+        <div class="heading flex items-center justify-between gap-5 flex-wrap">
+            <div class="heading3">Top Rated Products</div>
+            <a href="/" class="text-button pb-0.5 border-b-2 border-black">View All </a>
+        </div>
+        <div class="list grid xl:grid-cols-3 sm:grid-cols-2 gap-4 md:mt-10 mt-6" id="list">
+            <div class="product-item style-marketplace-list flex items-center gap-2 bg-white py-5 px-[39px] rounded" data-item="149">
+                <div class="bg-img lg:w-[150px] w-[120px] flex-shrink-0 aspect-1/1">
+                    <img class="w-full h-full object-cover" src="./assets/images/product/1000x1000.png" alt="" />
+                </div>
+                <div class="product-infor">
+                    <span class="caption2 uppercase block">UMINO</span>
+                    <span class="caption2 mt-2">Apple iPhone 12 Pro Max 128GB - Unlocked</span>
+                    <div class="flex gap-0.5 mt-2">
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                    </div>
+                    <div class="flex items-center gap-3 mt-3">
+                        <span class="text-title inline-block">$300.00</span>
+                        <del class="caption2 text-secondary">$350.00</del>
+                    </div>
+                </div>
+            </div>
+            <div class="product-item style-marketplace-list flex items-center gap-2 bg-white py-5 px-[39px] rounded" data-item="116">
+                <div class="bg-img lg:w-[150px] w-[120px] flex-shrink-0 aspect-1/1">
+                    <img class="w-full h-full object-cover" src="./assets/images/product/1000x1000.png" alt="" />
+                </div>
+                <div class="product-infor">
+                    <span class="caption2 uppercase block">UMINO</span>
+                    <span class="caption2 mt-2">Logitech Watch Aluminum Case -Pride Edition</span>
+                    <div class="flex gap-0.5 mt-2">
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                    </div>
+                    <div class="flex items-center gap-3 mt-3">
+                        <span class="text-title inline-block">$300.00</span>
+                        <del class="caption2 text-secondary">$350.00</del>
+                    </div>
+                </div>
+            </div>
+            <div class="product-item style-marketplace-list flex items-center gap-2 bg-white py-5 px-[39px] rounded" data-item="145">
+                <div class="bg-img lg:w-[150px] w-[120px] flex-shrink-0 aspect-1/1">
+                    <img class="w-full h-full object-cover" src="./assets/images/product/1000x1000.png" alt="" />
+                </div>
+                <div class="product-infor">
+                    <span class="caption2 uppercase block">UMINO</span>
+                    <span class="caption2 mt-2">Apple iPad Air 4 10.9-inch Wi-Fi 256GB Blue</span>
+                    <div class="flex gap-0.5 mt-2">
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                    </div>
+                    <div class="flex items-center gap-3 mt-3">
+                        <span class="text-title inline-block">$300.00</span>
+                        <del class="caption2 text-secondary">$350.00</del>
+                    </div>
+                </div>
+            </div>
+            <div class="product-item style-marketplace-list flex items-center gap-2 bg-white py-5 px-[39px] rounded" data-item="119">
+                <div class="bg-img lg:w-[150px] w-[120px] flex-shrink-0 aspect-1/1">
+                    <img class="w-full h-full object-cover" src="./assets/images/product/1000x1000.png" alt="" />
+                </div>
+                <div class="product-infor">
+                    <span class="caption2 uppercase block">UMINO</span>
+                    <span class="caption2 mt-2">Apple Watch Aluminum Case with Sport Loop</span>
+                    <div class="flex gap-0.5 mt-2">
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                    </div>
+                    <div class="flex items-center gap-3 mt-3">
+                        <span class="text-title inline-block">$300.00</span>
+                        <del class="caption2 text-secondary">$350.00</del>
+                    </div>
+                </div>
+            </div>
+            <div class="product-item style-marketplace-list flex items-center gap-2 bg-white py-5 px-[39px] rounded" data-item="150">
+                <div class="bg-img lg:w-[150px] w-[120px] flex-shrink-0 aspect-1/1">
+                    <img class="w-full h-full object-cover" src="./assets/images/product/1000x1000.png" alt="" />
+                </div>
+                <div class="product-infor">
+                    <span class="caption2 uppercase block">UMINO</span>
+                    <span class="caption2 mt-2">Samsung Galaxy S21 FE 8GB/128GB - White</span>
+                    <div class="flex gap-0.5 mt-2">
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                    </div>
+                    <div class="flex items-center gap-3 mt-3">
+                        <span class="text-title inline-block">$300.00</span>
+                        <del class="caption2 text-secondary">$350.00</del>
+                    </div>
+                </div>
+            </div>
+            <div class="product-item style-marketplace-list flex items-center gap-2 bg-white py-5 px-[39px] rounded" data-item="153">
+                <div class="bg-img lg:w-[150px] w-[120px] flex-shrink-0 aspect-1/1">
+                    <img class="w-full h-full object-cover" src="./assets/images/product/1000x1000.png" alt="" />
+                </div>
+                <div class="product-infor">
+                    <span class="caption2 uppercase block">UMINO</span>
+                    <span class="caption2 mt-2">Apple iPhone 13 Pro Max 128GB - Unlocked</span>
+                    <div class="flex gap-0.5 mt-2">
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                    </div>
+                    <div class="flex items-center gap-3 mt-3">
+                        <span class="text-title inline-block">$300.00</span>
+                        <del class="caption2 text-secondary">$350.00</del>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@* Recommended For You HTML *@
+
+<div class="recommend md:mt-[60px] mt-10">
+    <div class="container">
+        <div class="heading flex items-center justify-between gap-5 flex-wrap">
+            <div class="heading3">Recommended For You</div>
+            <a href="/" class="text-button pb-0.5 border-b-2 border-black">View All </a>
+        </div>
+        <div class="list grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-[30px] gap-[20px] md:mt-10 mt-6" id="recommended-product-con">
+            <div class="product-item style-marketplace p-4 border border-line rounded-2xl" data-item="116">
+                <div class="bg-img relative w-full aspect-1/1">
+                    <img src="./assets/images/product/1000x1000.png" alt="" />
+                    <div class="list-action flex flex-col gap-1 absolute top-0 right-0">
+                        <span class="add-wishlist-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-heart"></i>
+                        </span>
+                        <span class="compare-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-repeat"></i>
+                        </span>
+                        <span class="quick-view-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-eye"></i>
+                        </span>
+                        <span class="add-cart-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-shopping-bag-open"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="product-infor mt-4">
+                    <span class="text-title">Apple Watch</span>
+                    <div class="flex gap-0.5 mt-1">
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                    </div>
+                    <span class="text-title inline-block mt-1">$400.00</span>
+                </div>
+            </div>
+            <div class="product-item style-marketplace p-4 border border-line rounded-2xl" data-item="119">
+                <div class="bg-img relative w-full aspect-1/1">
+                    <img src="./assets/images/product/1000x1000.png" alt="" />
+                    <div class="list-action flex flex-col gap-1 absolute top-0 right-0">
+                        <span class="add-wishlist-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-heart"></i>
+                        </span>
+                        <span class="compare-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-repeat"></i>
+                        </span>
+                        <span class="quick-view-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-eye"></i>
+                        </span>
+                        <span class="add-cart-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-shopping-bag-open"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="product-infor mt-4">
+                    <span class="text-title">Apple Watch</span>
+                    <div class="flex gap-0.5 mt-1">
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                    </div>
+                    <span class="text-title inline-block mt-1">$300.00</span>
+                </div>
+            </div>
+            <div class="product-item style-marketplace p-4 border border-line rounded-2xl" data-item="118">
+                <div class="bg-img relative w-full aspect-1/1">
+                    <img src="./assets/images/product/1000x1000.png" alt="" />
+                    <div class="list-action flex flex-col gap-1 absolute top-0 right-0">
+                        <span class="add-wishlist-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-heart"></i>
+                        </span>
+                        <span class="compare-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-repeat"></i>
+                        </span>
+                        <span class="quick-view-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-eye"></i>
+                        </span>
+                        <span class="add-cart-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-shopping-bag-open"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="product-infor mt-4">
+                    <span class="text-title">Sport Watch</span>
+                    <div class="flex gap-0.5 mt-1">
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                    </div>
+                    <span class="text-title inline-block mt-1">$400.00</span>
+                </div>
+            </div>
+            <div class="product-item style-marketplace p-4 border border-line rounded-2xl max-lg:hidden max-md:block" data-item="152">
+                <div class="bg-img relative w-full aspect-1/1">
+                    <img src="./assets/images/product/1000x1000.png" alt="" />
+                    <div class="list-action flex flex-col gap-1 absolute top-0 right-0">
+                        <span class="add-wishlist-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-heart"></i>
+                        </span>
+                        <span class="compare-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-repeat"></i>
+                        </span>
+                        <span class="quick-view-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-eye"></i>
+                        </span>
+                        <span class="add-cart-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-shopping-bag-open"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="product-infor mt-4">
+                    <span class="text-title">Samsung Galaxy S21</span>
+                    <div class="flex gap-0.5 mt-1">
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                    </div>
+                    <span class="text-title inline-block mt-1">$400.00</span>
+                </div>
+            </div>
+            <div class="product-item style-marketplace p-4 border border-line rounded-2xl max-xl:hidden" data-item="155">
+                <div class="bg-img relative w-full aspect-1/1">
+                    <img src="./assets/images/product/1000x1000.png" alt="" />
+                    <div class="list-action flex flex-col gap-1 absolute top-0 right-0">
+                        <span class="add-wishlist-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-heart"></i>
+                        </span>
+                        <span class="compare-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-repeat"></i>
+                        </span>
+                        <span class="quick-view-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-eye"></i>
+                        </span>
+                        <span class="add-cart-btn w-8 h-8 bg-white flex items-center justify-center rounded-full box-shadow-small duration-300">
+                            <i class="ph ph-shopping-bag-open"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="product-infor mt-4">
+                    <span class="text-title">Airpod Pro 2023</span>
+                    <div class="flex gap-0.5 mt-1">
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                        <i class="ph-fill ph-star text-sm text-yellow"></i>
+                    </div>
+                    <span class="text-title inline-block mt-1">$100.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="recommend md:mt-[60px] mt-10">
+ 
+
+<div class="container">
+            <div class="heading flex items-center justify-center gap-5 flex-wrap">
+                <div class="heading3">Services</div>
+            </div>
+    <div class="benefit-block md:py-[60px] py-10 border-b border-line">
+        <div class="list-benefit grid items-start lg:grid-cols-4 grid-cols-2 gap-[30px]">
+            <div class="benefit-item flex flex-col justify-center">
+                <i class="icon-phone-call lg:text-7xl text-5xl"></i>
+                <div class="heading6 mt-5">24/7 Customer Service</div>
+                <div class="caption1 text-secondary mt-3">We're here to help you with any questions or concerns you have, 24/7.</div>
+            </div>
+            <div class="benefit-item flex flex-col justify-center">
+                <i class="icon-return lg:text-7xl text-5xl"></i>
+                <div class="heading6 mt-5">14-Day Money Back</div>
+                <div class="caption1 text-secondary mt-3">If you're not satisfied with your purchase, simply return it within 14 days for a refund.</div>
+            </div>
+            <div class="benefit-item flex flex-col justify-center">
+                <i class="icon-guarantee lg:text-7xl text-5xl"></i>
+                <div class="heading6 mt-5">Our Guarantee</div>
+                <div class="caption1 text-secondary mt-3">We stand behind our products and services and guarantee your satisfaction.</div>
+            </div>
+            <div class="benefit-item flex flex-col justify-center">
+                <i class="icon-delivery-truck lg:text-7xl text-5xl"></i>
+                <div class="heading6 mt-5">Shipping worldwide</div>
+                <div class="caption1 text-secondary mt-3">We ship our products worldwide, making them accessible to customers everywhere.</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+<script src="/assets/js/swiper-bundle.min.js"></script>
+<script src="/js/index.js"></script>

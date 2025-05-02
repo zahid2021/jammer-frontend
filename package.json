@@ -1,0 +1,15 @@
+{
+  "name": "jammerfrontend",
+  "version": "1.0.0",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "css:build": "npx tailwindcss -i ./wwwroot/css/style.css -o ./wwwroot/css/styles.css --minify"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "tailwindcss": "^3.4.10"
+  }
+}
